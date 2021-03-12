@@ -1,0 +1,5 @@
+hermes_curl.egg-info/PKG-INFO
+hermes_curl.egg-info/SOURCES.txt
+hermes_curl.egg-info/dependency_links.txt
+hermes_curl.egg-info/entry_points.txt
+hermes_curl.egg-info/top_level.txt

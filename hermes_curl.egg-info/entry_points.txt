@@ -1,0 +1,3 @@
+[console_scripts]
+hermes = hermes.main:main
+
