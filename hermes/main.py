@@ -69,35 +69,33 @@ def main():
 
     config = load_config(os.path.join(os.getcwd(), args.config[0]))
 
-    print(config)
+    body = config.get('body', '').strip()
+    headers = get_headers(config)
+    curl_flags = get_curl_flags(config)
 
-    # body = config.get('body', '').strip()
-    # headers = get_headers(config)
-    # curl_flags = get_curl_flags(config)
-    #
-    # try:
-    #     url = config['host'] + config['path']
-    #     method = config['method']
-    # except KeyError:
-    #     print("Host, path and method must be set.")
-    #     exit(1)
-    #
-    # curl_cmd = [
-    #     'curl',
-    #     '-X ' + method,
-    # ]
-    #
-    # if (body != ''):
-    #     curl_cmd.append("-d '{body}'".format(body=body))
-    # if (headers != ''):
-    #     curl_cmd.append(headers)
-    # if (curl_flags != ''):
-    #     curl_cmd.append(curl_flags)
-    #
-    # curl_cmd.append(url)
-    #
-    # if (args.print_cmd):
-    #     print(' \\\n  '.join(curl_cmd))
-    #     exit(0)
-    #
-    # os.system(' '.join(curl_cmd) + " | json_pp")
+    try:
+        url = config['host'] + config['path']
+        method = config['method']
+    except KeyError:
+        print("Host, path and method must be set.")
+        exit(1)
+
+    curl_cmd = [
+        'curl',
+        '-X ' + method,
+    ]
+
+    if (body != ''):
+        curl_cmd.append("-d '{body}'".format(body=body))
+    if (headers != ''):
+        curl_cmd.append(headers)
+    if (curl_flags != ''):
+        curl_cmd.append(curl_flags)
+
+    curl_cmd.append(url)
+
+    if (args.print_cmd):
+        print(' \\\n  '.join(curl_cmd))
+        exit(0)
+
+    os.system(' '.join(curl_cmd) + " | json_pp")
