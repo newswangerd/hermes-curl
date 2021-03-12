@@ -48,3 +48,12 @@ $ hermes api.yml
 - `host`: server host, including protocol and port.
 - `body`: request body
 - `curl_flags`: a dictionary with any other curl flags to add. ex `"--cacert: certfile"`
+
+## Installation
+
+```
+git clone git@github.com:newswangerd/hermes-curl.git
+cd hermes-curl
+pip install -r requirements.txt
+pip install -e .
+```
