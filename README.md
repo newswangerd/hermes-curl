@@ -19,7 +19,7 @@ curl_flags:
 Configuration for a specific endpoint:
 
 ```yaml
-#
+# api.yml
 from: api_base.yml
 method: PUT
 path: /my/api
@@ -30,7 +30,7 @@ body: >
 Run the `hermes` command:
 
 ```
-$ hermes api_base.yml
+$ hermes api.yml
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100   128  100   112  100    16   3960    565 --:--:-- --:--:-- --:--:--  4000
@@ -40,3 +40,11 @@ $ hermes api_base.yml
 ```
 
 ## Configuration file reference
+
+- `from`: specify a base configuration. This should be a relative path to the current file.
+- `headers`: dictionary of headers.
+- `path`: path on the server to send the request to.
+- `method`: HTTP method to use
+- `host`: server host, including protocol and port.
+- `body`: request body
+- `curl_flags`: a dictionary with any other curl flags to add. ex `"--cacert: certfile"`
