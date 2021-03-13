@@ -10,6 +10,7 @@ def pars_args():
     parser = argparse.ArgumentParser(description='Run curl from simple yaml configurations.')
     parser.add_argument('config', nargs=1, help='Configuration file to use.')
     parser.add_argument('--print', '-p', action='store_true', dest='print_cmd', help='Print the curl command instead of executing it.')
+    parser.add_argument('-v', action='store_true', dest='verbose', help='Verbose.')
 
     return parser.parse_args()
 
@@ -101,6 +102,12 @@ def main():
         exit(0)
 
     cmd = ' '.join(curl_cmd)
+    if args.verbose:
+        print('Curl Command:')
+        print(cmd)
+        print('Parsed Config:')
+        print(json.dumps(config, indent=2))
+
     print(f"{method}: {url}")
     stream = os.popen(cmd)
     for line in stream.readlines():
