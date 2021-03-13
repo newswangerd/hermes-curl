@@ -1,6 +1,8 @@
 import yaml
 import argparse
 import os
+import json
+
 from pathlib import Path
 
 
@@ -98,4 +100,11 @@ def main():
         print(' \\\n  '.join(curl_cmd))
         exit(0)
 
-    os.system(' '.join(curl_cmd) + " | json_pp")
+    cmd = ' '.join(curl_cmd)
+    print(f"{method}: {url}")
+    stream = os.popen(cmd)
+    for line in stream.readlines():
+        try:
+            print(json.dumps(json.loads(line), indent=2))
+        except json.decoder.JSONDecodeError:
+            print(line)
