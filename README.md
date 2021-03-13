@@ -1,6 +1,6 @@
 # Hermes cURL
 
-Hermes cURL is a lightweight wrapper on top of cURL that provides the ability to create reusable configurations for cURL. Configuration files can inherit configurations from other files which allows for common settings such as hostnames and authentication headers to be shared by multiple cURL configs.
+Hermes cURL is a lightweight wrapper on top of cURL that provides reusable HTTP request configurations in YAML. Configuration files can import attributes from other files which allows for common settings such as hostnames and authentication headers to be shared by multiple cURL calls.
 
 ## Usage
 
@@ -41,19 +41,16 @@ $ hermes api.yml
 
 ## Configuration file reference
 
-- `from`: specify a base configuration. This should be a relative path to the current file.
-- `headers`: dictionary of headers.
-- `path`: path on the server to send the request to.
-- `method`: HTTP method to use
-- `host`: server host, including protocol and port.
-- `body`: request body
-- `curl_flags`: a dictionary with any other curl flags to add. ex `"--cacert: certfile"`
+- `from` (optional): specify a path to another configuration file to inherit configurations from. This path is relative to the current file.
+- `path` (requires): path on the server to send the request to, including any query params.
+- `method` (required): HTTP method to use.
+- `host` (required): server host, including protocol and port.
+- `headers` (optional): dictionary of headers in the form. Ex`Header: value`.
+- `body` (optional): request body.
+- `curl_flags` (optional): a dictionary with any other curl flags to add. Ex `"--cacert: certfile"`.
 
 ## Installation
 
 ```
-git clone git@github.com:newswangerd/hermes-curl.git
-cd hermes-curl
-pip install -r requirements.txt
-pip install -e .
+python3 -m pip install hermes-curl
 ```
