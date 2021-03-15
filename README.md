@@ -41,6 +41,16 @@ $ hermes api.yml
 
 ## Configuration file reference
 
+### Config Inheritance
+
+Configurations are merged in the following fashion:
+
+- Dictionaries are merged, with values set in child configs having precedence.
+- `path` is concatenated, so setting `path: /foo/` in the parent and `path: /bar/`
+  in the child will result in `path: /foo/bar/`
+
+### Options
+
 - `from` (optional): specify a path to another configuration file to inherit configurations from. This path is relative to the current file.
 - `path` (requires): path on the server to send the request to, including any query params.
 - `method` (required): HTTP method to use.
@@ -48,6 +58,26 @@ $ hermes api.yml
 - `headers` (optional): dictionary of headers in the form. Ex`Header: value`.
 - `body` (optional): request body.
 - `curl_flags` (optional): a dictionary with any other curl flags to add. Ex `"--cacert: certfile"`.
+- `template_defaults` (optional): a dictionary of default template variables.
+
+### Template Variables
+
+Configurations can contain variables using the `{variable_name}` syntax. Variables can
+be passed into the configuration by either setting `-t variable_name=value` on the cli
+or by setting `template_defaults` in the configuration.
+
+#### Example
+
+```yaml
+host: http://localhost/
+path: api/thing/{pk}/
+method: GET
+template_defaults:
+  pk: 1
+```
+
+Running `hermes -t pk=2 example.yml` will `GET http://localhost/api/thing/2/` and running
+`hermes example.yml` will `GET http://localhost/api/thing/1/`
 
 ## Installation
 

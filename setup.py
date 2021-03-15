@@ -5,7 +5,7 @@ with open('README.md', encoding='utf-8') as f:
 
 setup(
     name='hermes_curl',
-    version='1.0.1',
+    version='1.0.2',
     entry_points={
         'console_scripts': ['hermes=hermes.main:main'],
     },
