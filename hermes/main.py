@@ -78,9 +78,7 @@ def merge_config(parent, child):
 
     # Merge paths by concatenating them.
     if parent.get('path') and child.get('path'):
-        print("merging path")
         child['path'] = urllib.parse.urljoin(parent['path'], child['path'])
-        print(child['path'])
 
     merged = {**parent, **child}
 
