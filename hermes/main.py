@@ -62,7 +62,7 @@ def get_headers(config):
 
 def get_curl_flags(config):
     flag_vals = []
-    flags = config.get('flags', {})
+    flags = config.get('curl_flags', {})
 
     for flag in flags:
         flag_vals.append("{flag} {value}".format(flag=flag, value=flags[flag]))

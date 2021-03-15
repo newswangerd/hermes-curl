@@ -39,15 +39,13 @@ $ hermes api.yml
 }
 ```
 
+## Installation
+
+```
+python3 -m pip install hermes-curl
+```
+
 ## Configuration file reference
-
-### Config Inheritance
-
-Configurations are merged in the following fashion:
-
-- Dictionaries are merged, with values set in child configs having precedence.
-- `path` is concatenated, so setting `path: /foo/` in the parent and `path: /bar/`
-  in the child will result in `path: /foo/bar/`
 
 ### Options
 
@@ -60,11 +58,23 @@ Configurations are merged in the following fashion:
 - `curl_flags` (optional): a dictionary with any other curl flags to add. Ex `"--cacert: certfile"`.
 - `template_defaults` (optional): a dictionary of default template variables.
 
+### Config Inheritance
+
+Configurations are merged in the following fashion:
+
+- Dictionaries are merged. Values set in child configs having precedence and override
+  any values from the parent configuration.
+- `path` is concatenated, so setting `path: /foo/` in the parent and `path: /bar/`
+  in the child will result in `path: /foo/bar/`
+- All other top level configurations use whatever value is set in the child configuration.
+  This includes `method`, `body`, and `host`.
+
 ### Template Variables
 
 Configurations can contain variables using the `{variable_name}` syntax. Variables can
 be passed into the configuration by either setting `-t variable_name=value` on the cli
-or by setting `template_defaults` in the configuration.
+or by setting `template_defaults` in the configuration. Values passed on the cli have
+precedence over values set in `template_defaults.`
 
 #### Example
 
@@ -78,9 +88,3 @@ template_defaults:
 
 Running `hermes -t pk=2 example.yml` will `GET http://localhost/api/thing/2/` and running
 `hermes example.yml` will `GET http://localhost/api/thing/1/`
-
-## Installation
-
-```
-python3 -m pip install hermes-curl
-```
