@@ -45,6 +45,12 @@ Description: # Hermes cURL
         }
         ```
         
+        ## Installation
+        
+        ```
+        python3 -m pip install hermes-curl
+        ```
+        
         ## Configuration file reference
         
         ### Options
@@ -62,9 +68,12 @@ Description: # Hermes cURL
         
         Configurations are merged in the following fashion:
         
-        - Dictionaries are merged, with values set in child configs having precedence.
+        - Dictionaries are merged. Values set in child configs having precedence and override
+          any values from the parent configuration.
         - `path` is concatenated, so setting `path: /foo/` in the parent and `path: /bar/`
           in the child will result in `path: /foo/bar/`
+        - All other top level configurations use whatever value is set in the child configuration.
+          This includes `method`, `body`, and `host`.
         
         ### Template Variables
         
@@ -85,12 +94,6 @@ Description: # Hermes cURL
         
         Running `hermes -t pk=2 example.yml` will `GET http://localhost/api/thing/2/` and running
         `hermes example.yml` will `GET http://localhost/api/thing/1/`
-        
-        ## Installation
-        
-        ```
-        python3 -m pip install hermes-curl
-        ```
         
 Platform: UNKNOWN
 Description-Content-Type: text/markdown
