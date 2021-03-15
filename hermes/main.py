@@ -26,19 +26,39 @@ class Config:
     def __getitem__(self, key):
         # return config item with all {templated} items rendered
         # cli flags have prescendece
+        return self._format_config(self._config[key], key)
+
+    def get(self, *args, **kwargs):
+        return self._config.get(*args, **kwargs)
+
+    def get_headers(self):
+        header_vals = []
+        headers = self.get('headers', {})
+        for header in headers:
+            header_vals.append("-H '{header}: {value}'".format(header=header, value=headers[header]))
+
+        return self._format_config(' '.join(header_vals), 'headers')
+
+    def get_curl_flags(self):
+        flag_vals = []
+        flags = self.get('curl_flags', {})
+
+        for flag in flags:
+            flag_vals.append("{flag} {value}".format(flag=flag, value=flags[flag]))
+
+        return self._format_config(' '.join(flags), 'curl_flags')
+
+    def _format_config(self, value, key):
         merged_template = {**self._config_templates, **self._cli_templates}
-        item = self._config[key]
+
         try:
-            return item.format(**merged_template)
+            return value.format(**merged_template)
         except KeyError as e:
             variable = str(e).replace("'", "")
             print(f"A template variable '{variable}' was set in '{key}', but no value "
                   f"has been configured for it. Either pass '-t {variable}=<value>' or "
                   f"set '{variable}' under 'template_defaults'")
             exit(1)
-
-    def get(self, *args, **kwargs):
-        return self._config.get(*args, **kwargs)
 
 
 def pars_args():
@@ -49,25 +69,6 @@ def pars_args():
     parser.add_argument('--template', '-t', type=str, action='append', dest='template_vars', help='Specify values for templated variables.')
 
     return parser.parse_args()
-
-
-def get_headers(config):
-    header_vals = []
-    headers = config.get('headers', {})
-    for header in headers:
-        header_vals.append("-H '{header}: {value}'".format(header=header, value=headers[header]))
-
-    return ' '.join(header_vals)
-
-
-def get_curl_flags(config):
-    flag_vals = []
-    flags = config.get('curl_flags', {})
-
-    for flag in flags:
-        flag_vals.append("{flag} {value}".format(flag=flag, value=flags[flag]))
-
-    return ' '.join(flags)
 
 
 def merge_config(parent, child):
@@ -116,8 +117,8 @@ def main():
     )
 
     body = config.get('body', '').strip()
-    headers = get_headers(config)
-    curl_flags = get_curl_flags(config)
+    headers = config.get_headers()
+    curl_flags = config.get_curl_flags()
 
     try:
         url = urllib.parse.urljoin(config['host'], config['path'])
