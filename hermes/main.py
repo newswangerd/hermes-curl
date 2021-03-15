@@ -14,12 +14,15 @@ class Config:
         self._cli_templates = self.load_templates(templates)
         self._config_templates = self._config.get('template_defaults', {})
 
+    def __str__(self):
+        return json.dumps(self._config, indent=2)
+
     def load_templates(self, templates):
         t = {}
         if templates is None:
             return t
         for x in templates:
-            vals = x.split('=')
+            vals = x.split('=', 1)
             t[vals[0]] = vals[1]
         return t
 
@@ -150,7 +153,7 @@ def main():
         print('Curl Command:')
         print(cmd)
         print('Parsed Config:')
-        print(json.dumps(config, indent=2))
+        print(config)
 
     stream = os.popen(cmd)
     for line in stream.readlines():
