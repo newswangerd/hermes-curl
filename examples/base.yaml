@@ -1,0 +1,5 @@
+---
+  host: https://api.chucknorris.io
+  headers:
+    Content-Type: application/json
+  method: GET
