@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: hermes-curl
-Version: 1.0.3
+Version: 1.0.4
 Summary: Hermes cURL is a lightweight wrapper on top of cURL that provides reusable HTTP request configurations in YAML.
 Home-page: https://github.com/newswangerd/hermes-curl
 License: UNKNOWN
@@ -10,7 +10,7 @@ Description: # Hermes cURL
         
         ## Usage
         
-        Base configuration for an entire API:
+        Set up a base configuration for an entire API:
         
         ```yaml
         # api_base.yml
@@ -22,7 +22,7 @@ Description: # Hermes cURL
            "--location":
         ```
         
-        Configuration for a specific endpoint:
+        Set up a configuration for a specific endpoint and import our the base settings:
         
         ```yaml
         # api.yml
@@ -44,6 +44,8 @@ Description: # Hermes cURL
            "msg": "hello Mr world"
         }
         ```
+        
+        See [examples](https://github.com/newswangerd/hermes-curl/tree/master/examples) for a working example.
         
         ## Installation
         
