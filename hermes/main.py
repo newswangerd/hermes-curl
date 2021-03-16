@@ -46,10 +46,11 @@ class Config:
         flag_vals = []
         flags = self.get('curl_flags', {})
 
+        print(flags)
         for flag in flags:
             flag_vals.append("{flag} {value}".format(flag=flag, value=flags[flag]))
 
-        return self._format_config(' '.join(flags), 'curl_flags')
+        return self._format_config(' '.join(flag_vals), 'curl_flags')
 
     def _format_config(self, value, key):
         merged_template = {**self._config_templates, **self._cli_templates}
@@ -76,7 +77,7 @@ def pars_args():
 
 def merge_config(parent, child):
     '''
-    Merges two configs together. Values set in the child take prescendece over
+    Merges two configs together. Values set in the child take precendece over
     values in the parent.
     '''
 
