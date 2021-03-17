@@ -9,6 +9,10 @@ from pathlib import Path
 
 class Config:
 
+    _context = {
+        "env": os.environ,
+    }
+
     def __init__(self, config, templates):
         self._config = config
         self._cli_templates = self.load_templates(templates)
@@ -53,7 +57,7 @@ class Config:
         return self._format_config(' '.join(flag_vals), 'curl_flags')
 
     def _format_config(self, value, key):
-        merged_template = {**self._config_templates, **self._cli_templates}
+        merged_template = {**self._context, **self._config_templates, **self._cli_templates}
 
         try:
             return value.format(**merged_template)

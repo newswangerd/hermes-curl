@@ -1,0 +1,7 @@
+---
+headers:
+  Content-Type: application/json
+  Authorization: "Token {env[TOKEN]}"
+method: GET
+host: http://localhost:8002
+path: /api/automation-hub/content/community/v3/collections/
