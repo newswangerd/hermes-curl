@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: hermes-curl
-Version: 1.0.4
+Version: 1.0.5
 Summary: Hermes cURL is a lightweight wrapper on top of cURL that provides reusable HTTP request configurations in YAML.
 Home-page: https://github.com/newswangerd/hermes-curl
 License: UNKNOWN
@@ -86,6 +86,9 @@ Description: # Hermes cURL
         
         #### Example
         
+        Running `hermes -t pk=2 example.yml` will `GET http://localhost/api/thing/2/` and running
+        `hermes example.yml` will `GET http://localhost/api/thing/1/`
+        
         ```yaml
         host: http://localhost/
         path: api/thing/{pk}/
@@ -94,8 +97,16 @@ Description: # Hermes cURL
           pk: 1
         ```
         
-        Running `hermes -t pk=2 example.yml` will `GET http://localhost/api/thing/2/` and running
-        `hermes example.yml` will `GET http://localhost/api/thing/1/`
+        #### Example
+        
+        Template variables can also be used via environment variables. This will inject the `TOKEN`
+        environment variable into the `Token` header.
+        
+        ```
+        headers:
+          Content-Type: application/json
+          Authorization: "Token {env[TOKEN]}"
+        ```
         
 Platform: UNKNOWN
 Description-Content-Type: text/markdown

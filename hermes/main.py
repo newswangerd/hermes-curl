@@ -52,7 +52,10 @@ class Config:
 
         print(flags)
         for flag in flags:
-            flag_vals.append("{flag} {value}".format(flag=flag, value=flags[flag]))
+            val = flags[flag]
+            if not val:
+                val = ''
+            flag_vals.append("{flag} {value}".format(flag=flag, value=val))
 
         return self._format_config(' '.join(flag_vals), 'curl_flags')
 

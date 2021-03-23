@@ -80,6 +80,9 @@ precedence over values set in `template_defaults.`
 
 #### Example
 
+Running `hermes -t pk=2 example.yml` will `GET http://localhost/api/thing/2/` and running
+`hermes example.yml` will `GET http://localhost/api/thing/1/`
+
 ```yaml
 host: http://localhost/
 path: api/thing/{pk}/
@@ -88,5 +91,13 @@ template_defaults:
   pk: 1
 ```
 
-Running `hermes -t pk=2 example.yml` will `GET http://localhost/api/thing/2/` and running
-`hermes example.yml` will `GET http://localhost/api/thing/1/`
+#### Example
+
+Template variables can also be used via environment variables. This will inject the `TOKEN`
+environment variable into the `Token` header.
+
+```
+headers:
+  Content-Type: application/json
+  Authorization: "Token {env[TOKEN]}"
+```
