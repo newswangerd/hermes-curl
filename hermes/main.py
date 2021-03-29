@@ -59,6 +59,13 @@ class Config:
 
         return self._format_config(' '.join(flag_vals), 'curl_flags')
 
+    def get_body(self):
+        body = self.get('body', None)
+        if isinstance(body, dict):
+            return json.dumps(body)
+        else:
+            return body.strip()
+
     def _format_config(self, value, key):
         merged_template = {**self._context, **self._config_templates, **self._cli_templates}
 
@@ -127,7 +134,7 @@ def main():
         args.template_vars
     )
 
-    body = config.get('body', '').strip()
+    body = config.get_body()
     headers = config.get_headers()
     curl_flags = config.get_curl_flags()
 
