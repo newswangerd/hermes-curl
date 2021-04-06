@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: hermes-curl
-Version: 1.0.6
+Version: 1.0.7
 Summary: Hermes cURL is a lightweight wrapper on top of cURL that provides reusable HTTP request configurations in YAML.
 Home-page: https://github.com/newswangerd/hermes-curl
 License: UNKNOWN

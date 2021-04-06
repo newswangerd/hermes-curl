@@ -60,7 +60,7 @@ class Config:
         return self._format_config(' '.join(flag_vals), 'curl_flags')
 
     def get_body(self):
-        body = self.get('body', None)
+        body = self.get('body', '')
         if isinstance(body, dict):
             return json.dumps(body)
         else:
