@@ -3,6 +3,7 @@ import argparse
 import os
 import json
 import urllib.parse
+import webbrowser
 
 from pathlib import Path
 
@@ -50,7 +51,6 @@ class Config:
         flag_vals = []
         flags = self.get('curl_flags', {})
 
-        print(flags)
         for flag in flags:
             val = flags[flag]
             if not val:
@@ -85,6 +85,11 @@ def pars_args():
     parser.add_argument('--print', '-p', action='store_true', dest='print_cmd', help='Print the curl command instead of executing it.')
     parser.add_argument('-v', action='store_true', dest='verbose', help='Verbose.')
     parser.add_argument('--template', '-t', type=str, action='append', dest='template_vars', help='Specify values for templated variables.')
+    parser.add_argument(
+        '--browser',
+        action='store_true',
+        dest='open_in_browser',
+        help='Open the URL specified in the config in your default browser instead of running CURL.')
 
     return parser.parse_args()
 
@@ -140,10 +145,14 @@ def main():
 
     try:
         url = urllib.parse.urljoin(config['host'], config['path'])
-        method = config['method']
+        method = config.get('method', 'GET')
     except KeyError:
-        print("Host, path and method must be set.")
+        print("Host and path must be set.")
         exit(1)
+
+    if args.open_in_browser:
+        webbrowser.open(url)
+        exit(0)
 
     curl_cmd = [
         'curl',
